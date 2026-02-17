@@ -19,38 +19,38 @@ const contadorItens = document.getElementById('contador-itens');
 let transacoes = [];
 
 // Função para Adicionar Transação
-    transacaoForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+transacaoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-// Extrai tipo (receita/despesa) e o nome da categoria do value do select
+    // Extrai tipo (receita/despesa) e o nome da categoria do value do select
     const [tipo, categoriaNome] = inputCategoria.value.split('|');
 
     const novaTransacao = {
-            id: Date.now(),
-            tipo: tipo,
-            categoria: categoriaNome,
-            descricao: inputDescricao.value || '---',
-            valor: parseFloat(inputValor.value)
-        };
+        id: Date.now(),
+        tipo: tipo,
+        categoria: categoriaNome,
+        descricao: inputDescricao.value || '---',
+        valor: parseFloat(inputValor.value)
+    };
 
-        transacoes.push(novaTransacao);
+    transacoes.push(novaTransacao);
 
-        transacaoForm.reset();
-        atualizarInterface();
-    });
+    transacaoForm.reset();
+    atualizarInterface();
+});
 
-    function excluirTransacao(id) {
-        transacoes = transacoes.filter(t => t.id !== id);
-        atualizarInterface();
-    }
+function excluirTransacao(id) {
+    transacoes = transacoes.filter(t => t.id !== id);
+    atualizarInterface();
+}
 
-    // 5. Função de Atualização Geral da UI
-    function atualizarInterface() {
-        renderizarTabelas();
-        calcularResumos();
-    }
+// 5. Função de Atualização Geral da UI
+function atualizarInterface() {
+    renderizarTabelas();
+    calcularResumos();
+}
 
-    function renderizarTabelas() {
+function renderizarTabelas() {
     listaDesktop.innerHTML = '';
     listaMobile.innerHTML = '';
 
@@ -65,7 +65,7 @@ let transacoes = [];
     // Se chegou aqui, há dados. Então escondemos o "Vazio" e mostramos a tabela.
     historicoVazio.classList.add('d-none');
     containerDesktop.classList.remove('d-none');
-    contadorItens.innerText = transacoes.length; 
+    contadorItens.innerText = transacoes.length;
 
     [...transacoes].reverse().forEach(t => {
 
@@ -119,14 +119,14 @@ let transacoes = [];
     });
 }
 
-function calcularResumos(){
+function calcularResumos() {
     const receitas = transacoes
-    .filter(t => t.tipo === 'receita')
-    .reduce((acc, t) => acc + t.valor, 0);
+        .filter(t => t.tipo === 'receita')
+        .reduce((acc, t) => acc + t.valor, 0);
 
     const despesas = transacoes
-    .filter(t => t.tipo === 'despesa')
-    .reduce((acc, t) => acc + t.valor, 0);
+        .filter(t => t.tipo === 'despesa')
+        .reduce((acc, t) => acc + t.valor, 0);
 
     const saldo = receitas - despesas;
 
@@ -138,9 +138,9 @@ function calcularResumos(){
     resumoSaldo.classList.add(saldo < 0 ? 'text-danger' : 'text-primary');
 }
 
-function FormatarMoeda(valor){
-   return valor.toLocaleString('pt-BR', {
-   style: 'currency',
-   currency: 'BRL'
-});
+function formatarMoeda(valor) {
+    return valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
 }

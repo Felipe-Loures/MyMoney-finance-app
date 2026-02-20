@@ -78,17 +78,17 @@ function renderizarTabelas() {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td class="ps-3">
-                <div class="d-flex align-items-center">
-                    <div class="bg-${cor} bg-opacity-10 p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                <div class=" d-none d-md-table-cell  align-items-center">
+                    <div class=" bg-${cor} bg-opacity-10 p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
                         <i class="bi ${icone} text-${cor}"></i>
                     </div>
-                    <span class="fw-bold text-dark">${t.categoria}</span>
+                    <span class=" d-none d-md-table-cell  fw-bold text-dark">${t.categoria}</span>
                 </div>
             </td>
-            <td class="text-muted small">${t.descricao}</td>
-            <td class="text-end fw-bold text-${cor}">${sinal}${formatarMoeda(t.valor)}</td>
+            <td class=" d-none d-md-table-cell text-muted small">${t.descricao}</td>
+            <td class=" d-none d-md-table-cell  text-end fw-bold text-${cor}">${sinal}${formatarMoeda(t.valor)}</td>
             <td class="text-end pe-3">
-                <button class="btn btn-sm btn-outline-danger border-0" onclick="excluirTransacao(${t.id})">
+                <button class=" d-none d-md-table-cell  btn btn-sm btn-outline-danger border-0" onclick="excluirTransacao(${t.id})">
                     <i class="bi bi-trash"></i>
                 </button>
             </td>

@@ -22,16 +22,32 @@ let transacoes = [];
 transacaoForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Extrai tipo (receita/despesa) e o nome da categoria do value do select
     const [tipo, categoriaNome] = inputCategoria.value.split('|');
+    const valor = parseFloat(inputValor.value);
 
     const novaTransacao = {
         id: Date.now(),
         tipo: tipo,
         categoria: categoriaNome,
         descricao: inputDescricao.value || '---',
-        valor: parseFloat(inputValor.value)
+        valor: valor
     };
+
+    const receitas = transacoes
+        .filter(t => t.tipo === 'receita')
+        .reduce((acc, t) => acc + t.valor, 0);
+
+    const despesas = transacoes
+        .filter(t => t.tipo === 'despesa')
+        .reduce((acc, t) => acc + t.valor, 0);
+
+    const saldoAtual = receitas - despesas;
+
+    
+    if (tipo === 'despesa' && valor > saldoAtual) {
+        alert('Saldo insuficiente para realizar essa despesa.');
+        return; 
+    }
 
     transacoes.push(novaTransacao);
 

@@ -1,0 +1,107 @@
+ :root {
+      --primary-bg: #f8f9fc;
+      --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      --success-color: #2ecc71;
+      --danger-color: #e74c3c;
+    }
+
+    body {
+      background-color: var(--primary-bg);
+      font-family: 'Inter', sans-serif;
+      color: #334155;
+    }
+
+    /* Navbar */
+    .navbar { background: #0d6efd !important; padding: 1rem 0; }
+    .nav-link {
+      transition: all 0.3s;
+      border-radius: 12px;
+      padding: 8px 20px !important;
+      color: rgba(255,255,255,0.8) !important;
+    }
+    .nav-link.active { background: rgba(255,255,255,0.2) !important; color: white !important; font-weight: 600; }
+
+    /* Página */
+    .page-header { margin: 40px 0; }
+    .page-title { font-weight: 800; letter-spacing: -1px; color: #1e293b; }
+
+    /* Cards */
+    .transacao-card {
+      border: none;
+      border-radius: 24px;
+      background: #ffffff;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border-left: 8px solid transparent;
+    }
+    .transacao-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .card-receita { border-left-color: var(--success-color); }
+    .card-despesa { border-left-color: var(--danger-color); }
+
+    /* Categoria */
+    .categoria-pill {
+      background: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Valor */
+    .valor-display {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 15px 0 5px 0;
+      letter-spacing: -1px;
+    }
+    .valor-receita { color: var(--success-color); }
+    .valor-despesa { color: var(--danger-color); }
+
+    /* Texto Secundário */
+    .data-texto { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
+    .desc-texto {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      min-height: 40px;
+    }
+
+    /* Botão Excluir */
+    .btn-delete-modern {
+      background: #fff1f2;
+      color: #f43f5e;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+    .btn-delete-modern:hover {
+      background: #f43f5e;
+      color: white;
+      transform: rotate(15deg);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 100px 20px;
+      text-align: center;
+      color: #94a3b8;
+    }

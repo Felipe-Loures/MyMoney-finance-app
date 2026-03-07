@@ -1,221 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- icon do navegador -->
-    <link rel="icon" href="../assets/icon/finhub.png" type="image/png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icon/finhub-16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icon/finhub-32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="../assets/icon/finhub-48.png" />
-    <!-- Para iPhone / iPad -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icon/finhub-180.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-
-    <title>Finhub-Sistema de Gestão Financeira</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyMoney - Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  />
+  <link rel="stylesheet" href="../styles/home.css" />
 </head>
-
 <body>
-    <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom shadow-sm py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <div class="d-flex flex-column">
-                    <span class="fw-bolder fs-4 lh-1 tracking-tight">My<span class="text-primary">Money</span></span>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top mb-5">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">MyMoney</a>
+      <button
+        class="navbar-toggler border-0 shadow-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Resumo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="historico.html">Histórico</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-                </div>
-            </a>
+  <div class="container">
+    <!-- TÍTULO DOS INDICADORES -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <h3 class="fw-bold text-center mb-4">Resumo Financeiro</h3>
+      </div>
+    </div>
 
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navMyMoney">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navMyMoney">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-2">
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold text-primary px-3 rounded-3" href="#">
-                            <i class="bi bi-house-door me-1"> Home </i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold text-secondary px-3" href="#">
-                            <i class="bi bi-wallet2 me-1"></i>
-                            <span>Saldo</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="d-flex align-items-center gap-3 border-top border-lg-0 pt-3 pt-lg-0">
-                    <button class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm d-flex align-items-center gap-2"
-                        onclick="document.getElementById('input-valor').focus()">
-                        <i class="bi bi-plus-circle-fill">
-                            Novo
-                        </i>
-                    </button>
-                </div>
-            </div>
+    <!-- CARDS DE INDICADORES -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="card-resumo border-saldo">
+          <div class="icon-box bg-primary bg-opacity-10 text-primary">
+            <i class="bi bi-bank"></i>
+          </div>
+          <small class="form-label-custom">Saldo Total</small>
+          <h2 class="fw-extrabold m-0" id="resumo-saldo" style="font-weight: 800;">
+            R$ 0,00
+          </h2>
         </div>
-    </header>
+      </div>
 
-    <div class="container mt-4">
-        <div class="row g-3 mt-3">
-            <!-- Pai do agrupamento-->
-            <div class="col-12 col-md-4">
-
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white border-start border-success border-4">
-                    <p class="fw-bolder small text-uppercase mb-2 ls-1 fs-8">
-                        Ganhos
-                    </p>
-                    <h2 class="fw-bold text-success mb-0 fs-28" id="resumo-receitas">
-                        R$ 0,00
-                    </h2>
-                </div>
-
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white border-start border-danger border-4">
-                    <p class="fw-bolder small text-uppercase mb-2 ls-1 fs-8">
-                        Gastos
-                    </p>
-                    <h2 class="fw-bold text-danger mb-0 fs-28" id="resumo-despesas">
-                        R$ 0,00
-                    </h2>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white border-start border-primary border-4">
-                    <p class="fw-bolder small text-uppercase mb-2 ls-1 fs-11">
-                        Saldo Atual
-                    </p>
-                    <h2 class="fw-bold text-primary mb-0" id="resumo-saldo" style="font-size: 28px;">
-                        R$ 0,00
-                    </h2>
-                </div>
-            </div>
-
+      <div class="col-md-4">
+        <div class="card-resumo border-ganho">
+          <div class="icon-box bg-success bg-opacity-10 text-success">
+            <i class="bi bi-arrow-up-right-circle"></i>
+          </div>
+          <small class="form-label-custom" style="color: var(--success-green);">Ganhos</small>
+          <h2 class="fw-extrabold m-0 text-success" id="resumo-receitas" style="font-weight: 800;">
+            R$ 0,00
+          </h2>
         </div>
-    </div>
+      </div>
 
-    <div class="container mt-5">
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-            <div class="card-body p-4 p-md-5">
-
-                <div class="d-flex align-items-center mb-4">
-                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
-                        <i class="bi bi-plus-circle-fill text-primary fs-4"></i>
-                    </div>
-                    <div>
-                        <h4 class="fw-bolder mb-0 text-dark">Nova movimentação</h4>
-                        <p class="text-muted small mb-0">Registre seus ganhos ou despesas</p>
-                    </div>
-                </div>
-
-                <form id="transacao-form" class="row g-4 align-items-end">
-
-                    <div class="col-12 col-md-3">
-                        <label class="form-label fw-bold text-uppercase ls-1 text-muted mb-2 small">
-                            <i class="bi bi-cash-stack me-1"></i> Valor (R$)
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text border-0 bg-light">R$</span>
-                            <input type="number" id="input-valor" class="form-control border-0 bg-light p-3 fw-bold"
-                                step="0.01" placeholder="0,00" required>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-4">
-                        <label class="form-label fw-bold text-uppercase ls-1 text-muted mb-2 small">
-                            <i class="bi bi-tag-fill me-1"></i> Categoria
-                        </label>
-                        <select id="input-categoria" class="form-select border-0 bg-light p-3" required>
-                            <option value="" disabled selected>Selecione a origem...</option>
-                            <optgroup label="💰 GANHOS">
-                                <option value="receita|Salário">Salário</option>
-                                <option value="receita|Investimentos">Investimentos</option>
-                                <option value="receita|Vendas">Vendas/Extras</option>
-                            </optgroup>
-                            <optgroup label="💸 GASTOS">
-                                <option value="despesa|Alimentação">Alimentação</option>
-                                <option value="despesa|Moradia">Moradia</option>
-                                <option value="despesa|Transporte">Transporte</option>
-                                <option value="despesa|Lazer">Lazer</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <label class="form-label fw-bold text-uppercase ls-1 text-muted mb-2 text-muted mb-2 small">
-                            <i class="bi bi-pencil-square me-1"></i> Descrição
-                        </label>
-                        <input type="text" id="input-descricao" class="form-control border-0 bg-light p-3"
-                            placeholder="Ex: Aluguel Fevereiro">
-                    </div>
-
-                    <div class="col-12 col-md-2">
-                        <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm hover-up" type="submit">
-                            <i class="bi bi-check-lg me-1"></i> Adicionar
-                        </button>
-                    </div>
-                </form>
-                <div class="container mt-5 mb-5">
-                    <div class="card border-0 shadow-sm rounded-4">
-                        <div
-                            class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between align-items-center">
-                            <div>
-                                <h4 class="fw-bolder mb-0 text-dark">Histórico</h4>
-                                <p class="text-muted small mb-0">Suas últimas atividades financeiras</p>
-                            </div>
-                            <span class="badge bg-light text-dark rounded-pill px-3 py-2 border">
-                                Itens: <span id="contador-itens">0</span>
-                            </span>
-                        </div>
-
-                        <div class="card-body p-4">
-
-                            <div id="historico-vazio" class="text-center py-5">
-                                <i class="bi bi- wallet2 text-muted mb-3 opacity-25 fs-3"></i>
-                                <h5 class="text-muted fw-normal">Nenhum registro encontrado</h5>
-                                <p class="text-muted small">Suas movimentações aparecerão aqui.</p>
-                            </div>
-
-                            <div id="container-desktop" class="table-responsive d-none">
-                                <table class="table table-hover align-middle">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th class="border-0 rounded-start ps-3">Categoria</th>
-                                            <th class=" d-none d-md-table-cell  border-0">Descrição</th>
-                                            <th class="border-0 text-end">Valor</th>
-                                            <th class=" d-none d-md-table-cell  border-0 text-end rounded-end pe-3">Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="lista-transacoes-desktop">
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div id="lista-transacoes-mobile" class="d-md-none">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="col-md-4">
+        <div class="card-resumo border-gasto">
+          <div class="icon-box bg-danger bg-opacity-10 text-danger">
+            <i class="bi bi-arrow-down-left-circle"></i>
+          </div>
+          <small class="form-label-custom" style="color: var(--danger-red);">Gastos</small>
+          <h2 class="fw-extrabold m-0 text-danger" id="resumo-despesas" style="font-weight: 800;">
+            R$ 0,00
+          </h2>
         </div>
+      </div>
     </div>
 
-    </div>
+    <!-- FORMULÁRIO DE NOVO LANÇAMENTO -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card-form p-4 p-md-5 mb-4">
+          <h4 class="fw-bold mb-4">
+            <i class="bi bi-plus-circle me-2"></i>Novo Lançamento
+          </h4>
+          <form id="transacao-form">
+            <div class="row g-4">
+              <div class="col-md-3">
+                <label class="form-label-custom">Valor (R$)</label>
+                <input
+                  type="number"
+                  id="input-valor"
+                  class="form-control form-control-custom"
+                  placeholder="0,00"
+                  step="0.01"
+                  required
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Tipo</label>
+                <select
+                  id="input-tipo"
+                  class="form-select form-control-custom"
+                  required
+                >
+                  <option value="" disabled selected>Selecione...</option>
+                  <option value="receita">💰 Ganho (Entrada)</option>
+                  <option value="despesa">💸 Gasto (Saída)</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Categoria</label>
+                <select
+                  id="input-categoria"
+                  class="form-select form-control-custom"
+                  required
+                >
+                  <option value="" disabled selected>O que é?</option>
+                  <option value="Salário">💼 Salário</option>
+                  <option value="Extra">🌟 Extra</option>
+                  <option value="Alimentação">🍕 Alimentação</option>
+                  <option value="Moradia">🏠 Moradia</option>
+                  <option value="Lazer">🍿 Lazer</option>
+                  <option value="Transporte">🚗 Transporte</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Descrição</label>
+                <input
+                  type="text"
+                  id="input-descricao"
+                  class="form-control form-control-custom"
+                  placeholder="Ex: Pix do Job"
+                />
+              </div>
+              <div class="col-12 mt-4">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-salvar w-100 shadow-sm"
+                >
+                  <i class="bi bi-check2-circle me-2"></i>CONFIRMAR LANÇAMENTO
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <script src="../js/script.js"></script>
+    <!-- BOTÃO PARA HISTÓRICO -->
+    <div class="text-center pb-5">
+      <a href="historico.html" class="btn-historico">
+        VER HISTÓRICO COMPLETO <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/script.js"></script>
 </body>
-
 </html>

@@ -137,9 +137,9 @@ if (form) {
         form.reset();
         renderHome();
         alert("✅ Lançamento gravado com sucesso!");
-        
+
         // Se estiver na tela de "Nova Transação", volta para a home
-        if(window.location.pathname.includes('nova-transacao.html')) {
+        if (window.location.pathname.includes('nova-transacao.html')) {
             window.location.href = 'index.html';
         }
     };
@@ -149,7 +149,7 @@ if (form) {
 // Funções globais
 // -------------------------------
 window.excluir = (i) => {
-    if(confirm("Deseja realmente excluir este registro?")) {
+    if (confirm("Deseja realmente excluir este registro?")) {
         const lista = obterDados();
         lista.splice(i, 1);
         salvarDados(lista);
@@ -159,7 +159,7 @@ window.excluir = (i) => {
 };
 
 window.limparTudo = () => {
-    if(confirm("Atenção: Isso apagará TODOS os seus dados. Continuar?")) {
+    if (confirm("Atenção: Isso apagará TODOS os seus dados. Continuar?")) {
         localStorage.removeItem('mymoney_data');
         renderHistorico();
         renderHome();
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname.split("/").pop() || 'index.html';
 
     navLinks.forEach(link => {
-        if(link.getAttribute('href') === currentPath) {
+        if (link.getAttribute('href') === currentPath) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');

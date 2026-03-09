@@ -1,36 +1,36 @@
- const obterDados = () => JSON.parse(localStorage.getItem('mymoney_data')) || [];
-    const salvarDados = (dados) => localStorage.setItem('mymoney_data', JSON.stringify(dados));
-    const brl = v => v.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+const obterDados = () => JSON.parse(localStorage.getItem('mymoney_data')) || [];
+const salvarDados = (dados) => localStorage.setItem('mymoney_data', JSON.stringify(dados));
+const brl = v => v.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
-    // Mapeamento categorias -> Bootstrap Icons
-    const iconesCategoria = {
-      'Salário': 'bi-briefcase-fill',
-      'Extra': 'bi-star-fill',
-      'Alimentação': 'bi-cup-fill',
-      'Moradia': 'bi-house-fill',
-      'Lazer': 'bi-emoji-smile-fill',
-      'Transporte': 'bi-car-front-fill'
-    };
+// Mapeamento categorias -> Bootstrap Icons
+const iconesCategoria = {
+  'Salário': 'bi-briefcase-fill',
+  'Extra': 'bi-star-fill',
+  'Alimentação': 'bi-cup-fill',
+  'Moradia': 'bi-house-fill',
+  'Lazer': 'bi-emoji-smile-fill',
+  'Transporte': 'bi-car-front-fill'
+};
 
-    function renderHistorico() {
-      const container = document.getElementById('lista-completa');
-      if (!container) return;
+function renderHistorico() {
+  const container = document.getElementById('lista-completa');
+  if (!container) return;
 
-      const transacoes = obterDados();
-      if (transacoes.length === 0) {
-        container.innerHTML = `
+  const transacoes = obterDados();
+  if (transacoes.length === 0) {
+    container.innerHTML = `
           <div class="empty-state">
             <i class="bi bi-wallet2" style="font-size: 4rem; opacity: 0.3"></i>
             <h5 class="mt-3">Sua carteira está silenciosa...</h5>
             <p>Adicione transações na tela inicial para vê-las aqui.</p>
           </div>`;
-        return;
-      }
+    return;
+  }
 
-      container.innerHTML = transacoes.map((t, i) => {
-        const isReceita = t.tipo === 'receita';
-        const iconeClass = iconesCategoria[t.cat] || 'bi-question-circle';
-        return `
+  container.innerHTML = transacoes.map((t, i) => {
+    const isReceita = t.tipo === 'receita';
+    const iconeClass = iconesCategoria[t.cat] || 'bi-question-circle';
+    return `
         <div class="col">
           <div class="transacao-card ${isReceita ? 'card-receita' : 'card-despesa'}">
             <div class="d-flex justify-content-between align-items-start mb-2">
@@ -59,26 +59,25 @@
           </div>
         </div>
         `;
-      }).reverse().join('');
-    }
+  }).reverse().join('');
+}
 
-    window.excluir = i => {
-      if (confirm('Deseja realmente excluir este registro?')) {
-        const lista = obterDados();
-        lista.splice(i, 1);
-        salvarDados(lista);
-        renderHistorico();
-      }
-    };
+window.excluir = i => {
+  if (confirm('Deseja realmente excluir este registro?')) {
+    const lista = obterDados();
+    lista.splice(i, 1);
+    salvarDados(lista);
+    renderHistorico();
+  }
+};
 
-    window.limparTudo = () => {
-      if (confirm('ATENÇÃO: Isso apagará todos os seus registros permanentemente. Confirmar?')) {
-        localStorage.removeItem('mymoney_data');
-        renderHistorico();
-      }
-    };
+window.limparTudo = () => {
+  if (confirm('ATENÇÃO: Isso apagará todos os seus registros permanentemente. Confirmar?')) {
+    localStorage.removeItem('mymoney_data');
+    renderHistorico();
+  }
+};
 
-    document.addEventListener('DOMContentLoaded', renderHistorico);
+document.addEventListener('DOMContentLoaded', renderHistorico);
 
 
-    

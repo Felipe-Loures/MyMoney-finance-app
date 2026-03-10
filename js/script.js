@@ -17,7 +17,7 @@ function renderHome() {
   const receitaTxt = document.getElementById("resumo-receitas");
   const despesaTxt = document.getElementById("resumo-despesas");
   const cofrinhosTxt = document.getElementById("resumo-cofrinhos");
-  
+
   if (!saldoTxt) return;
 
   const transacoes = obterDados();
@@ -57,7 +57,7 @@ const form = document.getElementById("transacao-form");
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     const valor = parseFloat(document.getElementById("input-valor").value);
     const tipo = document.getElementById("input-tipo").value;
     const categoria = document.getElementById("input-categoria").value;
@@ -102,7 +102,7 @@ if (form) {
     // Salvar e atualizar
     listaAtual.unshift(nova);
     salvarDados(listaAtual);
-    
+
     form.reset();
     renderHome();
     alert("✅ Lançamento gravado com sucesso!");

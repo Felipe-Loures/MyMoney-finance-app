@@ -1,115 +1,64 @@
-// -------------------------------
-// Funções de armazenamento
-// -------------------------------
-const obterDados = () => JSON.parse(localStorage.getItem("mymoney_data")) || [];
-const salvarDados = (dados) =>
-  localStorage.setItem("mymoney_data", JSON.stringify(dados));
+// --- DATA LAYER ---
+const getData = () => JSON.parse(localStorage.getItem("mymoney_data")) || [];
+const saveData = (data) => localStorage.setItem("mymoney_data", JSON.stringify(data));
 
-// Formatador de moeda (BRL)
-const brl = (v) =>
-  v.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
+// --- UTILS & LOGIC ---
+const brl = (v) => v.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
 
-// -------------------------------
-// Atualiza o Dashboard
-// -------------------------------
+const calculateTotals = (transactions) => {
+  const keys = { receita: "income", despesa: "expenses", cofrinho: "savings" };
+  return transactions.reduce((acc, t) => {
+    const key = keys[t.tipo];
+    if (key) acc[key] += t.valor;
+    return acc;
+  }, { income: 0, expenses: 0, savings: 0 });
+};
+
+// --- DASHBOARD RENDER ---
 function renderHome() {
-  const saldoTxt = document.getElementById("resumo-saldo");
-  const receitaTxt = document.getElementById("resumo-receitas");
-  const despesaTxt = document.getElementById("resumo-despesas");
-  const cofrinhosTxt = document.getElementById("resumo-cofrinhos");
+  const balanceEl = document.getElementById("resumo-saldo");
+  if (!balanceEl) return;
 
-  if (!saldoTxt) return;
+  const totals = calculateTotals(getData());
+  const availableBalance = totals.income - totals.expenses - totals.savings;
 
-  const transacoes = obterDados();
+  document.getElementById("resumo-receitas").innerText = brl(totals.income);
+  document.getElementById("resumo-despesas").innerText = brl(totals.expenses);
+  document.getElementById("resumo-cofrinhos").innerText = brl(totals.savings);
 
-  // Cálculos por tipo
-  const totalReceitas = transacoes
-    .filter((t) => t.tipo === "receita")
-    .reduce((a, t) => a + t.valor, 0);
-
-  const totalDespesas = transacoes
-    .filter((t) => t.tipo === "despesa")
-    .reduce((a, t) => a + t.valor, 0);
-
-  const totalCofrinhos = transacoes
-    .filter((t) => t.tipo === "cofrinho")
-    .reduce((a, t) => a + t.valor, 0);
-
-  // Lógica: O saldo disponível é o que sobra após despesas E o que foi guardado
-  const saldoDisponivel = totalReceitas - totalDespesas - totalCofrinhos;
-
-  // Atualização da Interface
-  receitaTxt.innerText = brl(totalReceitas);
-  despesaTxt.innerText = brl(totalDespesas);
-  cofrinhosTxt.innerText = brl(totalCofrinhos);
-  saldoTxt.innerText = brl(saldoDisponivel);
-
-  // Estilização do saldo (Verde se positivo, Vermelho se negativo)
-  saldoTxt.className = `fw-extrabold m-0 ${
-    saldoDisponivel >= 0 ? "text-primary" : "text-danger"
-  }`;
+  balanceEl.innerText = brl(availableBalance);
+  balanceEl.className = `fw-extrabold m-0 ${availableBalance >= 0 ? "text-primary" : "text-danger"}`;
 }
 
-// -------------------------------
-// Adiciona nova transação
-// -------------------------------
+// --- FORM HANDLER ---
 const form = document.getElementById("transacao-form");
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const valor = parseFloat(document.getElementById("input-valor").value);
-    const tipo = document.getElementById("input-tipo").value;
-    const categoria = document.getElementById("input-categoria").value;
-    const descricao = document.getElementById("input-descricao").value;
-
-    if (!tipo) {
-      alert("Por favor, selecione o tipo da transação!");
-      return;
-    }
-
-    const listaAtual = obterDados();
-
-    // Validação de Saldo: Impede despesa ou guardar no cofrinho se não houver saldo
-    if (tipo === "despesa" || tipo === "cofrinho") {
-      const receitas = listaAtual
-        .filter((t) => t.tipo === "receita")
-        .reduce((a, t) => a + t.valor, 0);
-      const despesas = listaAtual
-        .filter((t) => t.tipo === "despesa")
-        .reduce((a, t) => a + t.valor, 0);
-      const cofrinhos = listaAtual
-        .filter((t) => t.tipo === "cofrinho")
-        .reduce((a, t) => a + t.valor, 0);
-
-      const saldoAtual = receitas - despesas - cofrinhos;
-
-      if (valor > saldoAtual) {
-        alert("Saldo insuficiente para realizar esta operação!");
-        return;
-      }
-    }
-
-    // Criar novo objeto de transação
-    const nova = {
-      valor,
-      tipo,
-      cat: categoria,
-      desc: descricao,
-      data: new Date().toLocaleDateString("pt-br"),
+    const fields = {
+      valor: parseFloat(document.getElementById("input-valor").value),
+      tipo: document.getElementById("input-tipo").value,
+      cat: document.getElementById("input-categoria").value,
+      desc: document.getElementById("input-descricao").value
     };
 
-    // Salvar e atualizar
-    listaAtual.unshift(nova);
-    salvarDados(listaAtual);
+    const currentList = getData();
+    const totals = calculateTotals(currentList);
+    const currentBalance = totals.income - totals.expenses - totals.savings;
+
+    if (["despesa", "cofrinho"].includes(fields.tipo) && fields.valor > currentBalance) {
+      return alert("Saldo insuficiente!");
+    }
+
+    const newItem = { ...fields, data: new Date().toLocaleDateString("pt-br") };
+    saveData([newItem, ...currentList]);
 
     form.reset();
     renderHome();
-    alert("✅ Lançamento gravado com sucesso!");
+    if (typeof renderHistory === "function") renderHistory(); // Atualiza histórico se estiver na mesma página
+    alert("✅ Registro salvo com sucesso!");
   });
 }
 
-// -------------------------------
-// Inicialização
-// -------------------------------
 document.addEventListener("DOMContentLoaded", renderHome);
